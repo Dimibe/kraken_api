@@ -29,7 +29,6 @@ class KrakenApi {
       url += '?';
       parameters.forEach((k, v) => url += '$k=$v&');
     }
-    print(url);
     var response = await http.get(url);
     return response.body;
   }
@@ -107,4 +106,18 @@ class Methods {
   static const TRADE_BALANCE = const Methods._internal('TradeBalance', true);
   static const OPEN_ORDERS = const Methods._internal('OpenOrders', true);
   static const CLOSED_ORDERS = const Methods._internal('ClosedOrders', true);
+  static const QUERY_ORDERS = const Methods._internal('QueryOrders', true);
+  static const TRADES_HISTORY = const Methods._internal('TradesHistory', true);
+  static const QUERY_TRADES = const Methods._internal('QueryTrades', true);
+  static const OPEN_POSITIONS = const Methods._internal('OpenPositions', true);
+  static const LEDGERS = const Methods._internal('Ledgers', true);
+  static const QUERY_LEDGERS = const Methods._internal('QueryLedgers', true);
+  static const TRADE_VOLUME = const Methods._internal('TradeVolume', true);
+  static const ADD_EXPORT = const Methods._internal('AddExport', true);
+  static const EXPORT_STATUS = const Methods._internal('ExportStatus', true);
+  static const RETRIEVE_EXPORT =
+      const Methods._internal('RetrieveExport', true);
+  static const REMOVE_EXPORT = const Methods._internal('RemoveExport', true);
+  static const ADD_ORDER = const Methods._internal('AddOrder', true);
+  static const CANCEL_ORDER = const Methods._internal('CancelOrder', true);
 }
