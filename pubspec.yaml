@@ -1,6 +1,6 @@
 name: kraken_api
 description: Dart Library for the kraken api (https://api.kraken.com/0).
-version: 0.0.1
+version: 1.0.0
 author: Dimitrios Begnis <dimitribegnis@gmail.com>
 homepage: https://github.com/Dimibe
 repository: https://github.com/Dimibe/grouped_list

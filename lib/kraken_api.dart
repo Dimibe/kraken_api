@@ -12,55 +12,69 @@ class KrakenApi {
   final String apiKey;
   final String secretKey;
 
+  http.Client client = http.Client();
+
   KrakenApi(this.apiKey, this.secretKey);
 
   Future<String> call(Methods method, {Map<String, String> parameters}) {
     if (method._private) {
-      return _privateRequest(method, parameters: parameters);
+      String nonce = _generateNonce();
+      return callPrivate(method._value, nonce, parameters: parameters);
     }
-    return _publicRequest(method, parameters: parameters);
+    return callPublic(method._value, parameters: parameters);
   }
 
-  Future<String> _publicRequest(Methods method,
+  Future<String> callPublic(String path,
       {Map<String, String> parameters}) async {
-    String path = method.toString();
     var url = '$URL$path';
     if (parameters != null) {
       url += '?';
       parameters.forEach((k, v) => url += '$k=$v&');
     }
-    var response = await http.get(url);
+    var response = await client.get(url);
     return response.body;
   }
 
-  Future<String> _privateRequest(Methods method,
+  Future<String> callPrivate(String method, String nonce,
       {Map<String, String> parameters}) {
     String path = method.toString();
-    String _nonce = '${DateTime.now().millisecondsSinceEpoch}000';
-    String postData = 'nonce=$_nonce&';
-    parameters?.forEach((k, v) => postData += '$k=$v&');
 
+    String postData = _createPostData(nonce, parameters);
+    String apiSign = _createApiSign(path, postData, nonce);
+
+    return _doRequest(URL + path, apiKey, apiSign, postData);
+  }
+
+  String _generateNonce() {
+    return '${DateTime.now().millisecondsSinceEpoch}000';
+  }
+
+  String _createPostData(String nonce, Map parameters) {
+    String postData = 'nonce=$nonce&';
+    parameters?.forEach((k, v) => postData += '$k=$v&');
+    return postData;
+  }
+
+  String _createApiSign(String path, String postData, String nonce) {
     // create sha256
-    String message = _nonce + postData;
+    String message = nonce + postData;
     List<int> bytes = utf8.encode(message);
     Digest data = sha256.convert(bytes);
 
+    // create hmac
     List<int> key = base64.decode(secretKey);
     List<int> hmacInput = List();
     hmacInput.addAll(utf8.encode(path));
     hmacInput.addAll(data.bytes);
-
-    // create hmac
     Hmac hmacSha512 = new Hmac(sha512, key);
     Digest digest = hmacSha512.convert(hmacInput);
 
-    String apiSign = base64.encode(digest.bytes);
-    return _doRequest(URL + path, apiKey, apiSign, postData);
+    return base64.encode(digest.bytes);
   }
 
   Future<String> _doRequest(
       String url, String apiKey, String apiSign, String postData) async {
-    var response = await http.post(
+    var response = await client.post(
       url,
       encoding: Encoding.getByName('utf-8'),
       headers: {
@@ -91,7 +105,7 @@ class Methods {
     return 'public';
   }
 
-  // Public
+  // Public methods
   static const TIME = const Methods._internal('Time');
   static const ASSETS = const Methods._internal('Assets');
   static const ASSET_PAIRS = const Methods._internal('AssetPairs');
@@ -101,7 +115,7 @@ class Methods {
   static const TRADES = const Methods._internal('Trades');
   static const SPREAD = const Methods._internal('Spread');
 
-  // Private
+  // Private methods
   static const BALANCE = const Methods._internal('Balance', true);
   static const TRADE_BALANCE = const Methods._internal('TradeBalance', true);
   static const OPEN_ORDERS = const Methods._internal('OpenOrders', true);
