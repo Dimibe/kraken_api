@@ -31,18 +31,55 @@ First create an `KrakenApi` instance:
  Request parameters can be added to the request by the `parameters` parameter:
 
 ```Dart
-  Future<String> response = api.call(Methods.TRADE_BALANCE, parameters: {'asset': 'ZEUR'});
+Future<String> response = api.call(Methods.TRADE_BALANCE, parameters: {'asset': 'ZEUR'});
 ```
 
 Hint: To see which parameters can be applied to which API calls take a look at the [kraken api](https://www.kraken.com/features/api).
 
 The `call` method returns the response body as an `Future<String>` which can be accessed through e.g.: 
 ```Dart
-  response.then(
+response.then(
     (body) {
-      Map<String, dynamic> tradeBalances = jsonDecode(body)['result'];
-      return tradeBalances;
+        Map<String, dynamic> tradeBalances = jsonDecode(body)['result'];
+        return tradeBalances;
     },
-  );
+);
  ```
+
+ ## API
+
+ Public methods:
+
+```Dart
+Methods.TIME 
+Methods.ASSETS
+Methods.ASSET_PAIRS 
+Methods.TICKER 
+Methods.OHLC 
+Methods.DEPTH 
+Methods.TRADES
+Methods.SPREAD 
+```
+
+Private methods:
+
+```Dart
+Methods.BALANCE
+Methods.TRADE_BALANCE
+Methods.OPEN_ORDERS 
+Methods.CLOSED_ORDERS 
+Methods.QUERY_ORDERS
+Methods.TRADES_HISTORY 
+Methods.QUERY_TRADES 
+Methods.OPEN_POSITIONS 
+Methods.LEDGERS 
+Methods.QUERY_LEDGERS
+Methods.TRADE_VOLUME 
+Methods.ADD_EXPORT
+Methods.EXPORT_STATUS 
+Methods.RETRIEVE_EXPORT 
+Methods.REMOVE_EXPORT 
+Methods.ADD_ORDER
+Methods.CANCEL_ORDER 
+```
 
