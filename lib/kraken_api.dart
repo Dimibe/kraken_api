@@ -19,9 +19,9 @@ class KrakenApi {
   Future<String> call(Methods method, {Map<String, String> parameters}) {
     if (method._private) {
       String nonce = _generateNonce();
-      return callPrivate(method._value, nonce, parameters: parameters);
+      return callPrivate(method.toString(), nonce, parameters: parameters);
     }
-    return callPublic(method._value, parameters: parameters);
+    return callPublic(method.toString(), parameters: parameters);
   }
 
   Future<String> callPublic(String path,
@@ -98,6 +98,8 @@ class Methods {
   final String _value;
   final bool _private;
   const Methods._internal(this._value, [this._private = false]);
+  
+  @override
   toString() => '/$API_VERSION/$_type/$_value';
 
   get _type {

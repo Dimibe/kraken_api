@@ -4,9 +4,21 @@ import 'package:test/test.dart';
 import 'package:kraken_api/kraken_api.dart';
 
 void main() {
-  test('test methods', () {
-    expect('${Methods.TIME}', '/0/public/Time');
-    expect('${Methods.BALANCE}', '/0/private/Balance');
+
+  test('test request url building', () async {
+    Client client = MockClient((request) async {
+      return Response(request.url.toString(), 200);
+    });
+    KrakenApi api = KrakenApi('', '');
+    api.client = client;
+
+    await api.call(Methods.BALANCE).then((response) {
+      expect(response, 'https://api.kraken.com/0/private/Balance');
+    });
+
+    await api.call(Methods.TIME).then((response) {
+      expect(response, 'https://api.kraken.com/0/public/Time');
+    });
   });
 
   test('test api sign calculation', () async {
