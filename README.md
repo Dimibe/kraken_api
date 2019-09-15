@@ -1,13 +1,13 @@
 # Kraken API
 
-Dart Library for the kraken api (https://api.kraken.com/0).
+Dart Library for the Kraken API. (https://www.kraken.com/features/api).
 
 ## Getting Started
 
  Add the package to your pubspec.yaml:
 
  ```yaml
- kraken_api: ^1.0.0
+ kraken_api: ^1.0.1
  ```
  
  In your dart file, import the library:
@@ -27,14 +27,14 @@ First create an `KrakenApi` instance:
  The constructor requires the API-Key and the Secret-Key which  should be both generated on the kraken website. 
 
  For accessing the kraken API use the `call` method.
- It's required to pass the method which should be called as the first parameter.
+ As the first parameter pass the method which should be called. A list of all available requests is added at the end. 
  Request parameters can be added to the request by the `parameters` parameter:
 
 ```Dart
 Future<String> response = api.call(Methods.TRADE_BALANCE, parameters: {'asset': 'ZEUR'});
 ```
 
-Hint: To see which parameters can be applied to which API calls take a look at the [kraken api](https://www.kraken.com/features/api).
+Hint: To see which parameters can be applied to which API calls take a look at the [Kraken API](https://www.kraken.com/features/api).
 
 The `call` method returns the response body as an `Future<String>` which can be accessed through e.g.: 
 ```Dart
