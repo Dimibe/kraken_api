@@ -4,7 +4,6 @@ import 'package:test/test.dart';
 import 'package:kraken_api/kraken_api.dart';
 
 void main() {
-
   test('test request url building', () async {
     Client client = MockClient((request) async {
       return Response(request.url.toString(), 200);
@@ -30,7 +29,8 @@ void main() {
 
     String nonce = '"1568383937667000"';
     await api.callPrivate(Methods.BALANCE.toString(), nonce).then((response) {
-      expect(response, 'vycuwQPKES3B5BylGP4jV7XaI+/NNpng7anh0QGnaOERt9kbO8Uv2Epuho1nutMT/yQMUwat0kDYUOJRfsPWgA==');
+      expect(response,
+          'vycuwQPKES3B5BylGP4jV7XaI+/NNpng7anh0QGnaOERt9kbO8Uv2Epuho1nutMT/yQMUwat0kDYUOJRfsPWgA==');
     });
   });
 }
