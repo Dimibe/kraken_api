@@ -30,7 +30,7 @@ void main() {
     String nonce = '"1568383937667000"';
     await api.callPrivate(Methods.BALANCE.toString(), nonce).then((response) {
       expect(response,
-          'vycuwQPKES3B5BylGP4jV7XaI+/NNpng7anh0QGnaOERt9kbO8Uv2Epuho1nutMT/yQMUwat0kDYUOJRfsPWgA==');
+          'bmKZ9bNEGGJR/KDEPfzsNfkIk3EtBqYLcK+D8YWrX/ovq8vCTiPx7IBaulceM2Kl0qf6i/ByVRAGEbfifEsWnw==');
     });
   });
 }
