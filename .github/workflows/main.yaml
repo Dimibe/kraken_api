@@ -14,16 +14,19 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    container:
+      image:  google/dart:latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1.3.0
       - name: Install Dependencies
-        run: flutter packages get
+        run: flutter packages get && pub get
       - name: Format
         run: flutter format --set-exit-if-changed lib test
       - name: Analyze
         run: flutter analyze lib test
       - name: Run tests
-        run: dart pub get && dart test
+        run: pub run test
