@@ -1,5 +1,5 @@
 # Kraken API
-[![Pub](https://img.shields.io/pub/v/grouped_list.svg)](https://pub.dev/packages/kraken_api)
+[![Pub](https://img.shields.io/pub/v/kraken_api.svg)](https://pub.dev/packages/kraken_api)
 ![CI](https://github.com/Dimibe/kraken_api/workflows/CI/badge.svg?branch=master)
 
 Dart Library for the Kraken API. (https://www.kraken.com/features/api).
