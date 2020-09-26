@@ -21,12 +21,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1.3.0
       - name: Install Dependencies
-        run: flutter packages get && pub get
-      - name: Format
-        run: flutter format --set-exit-if-changed lib test
-      - name: Analyze
-        run: flutter analyze lib test
+        run: pub get
       - name: Run tests
         run: pub run test
