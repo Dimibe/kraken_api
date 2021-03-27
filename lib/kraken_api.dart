@@ -20,7 +20,7 @@ class KrakenApi {
 
   /// creates and executes a request to the kraken api.
   /// Returns the api call result.
-  Future<String> call(Methods method, {Map<String, String> parameters}) {
+  Future<String> call(Methods method, {Map<String, String>? parameters}) {
     if (method._private) {
       String nonce = _generateNonce();
       return callPrivate(method.toString(), nonce, parameters: parameters);
@@ -30,19 +30,19 @@ class KrakenApi {
 
   // Creates and executes a public market data request
   Future<String> callPublic(String path,
-      {Map<String, String> parameters}) async {
+      {Map<String, String>? parameters}) async {
     var url = '$URL$path';
     if (parameters != null) {
       url += '?';
       parameters.forEach((k, v) => url += '$k=$v&');
     }
-    var response = await client.get(url);
+    var response = await client.get(Uri.parse(url));
     return response.body;
   }
 
   /// Creates and executes a private user request
   Future<String> callPrivate(String method, String nonce,
-      {Map<String, String> parameters}) {
+      {Map<String, String>? parameters}) {
     String path = method.toString();
 
     String postData = _createPostData(nonce, parameters);
@@ -55,7 +55,7 @@ class KrakenApi {
     return '${DateTime.now().millisecondsSinceEpoch}000';
   }
 
-  String _createPostData(String nonce, Map parameters) {
+  String _createPostData(String nonce, Map? parameters) {
     String postData = 'nonce=$nonce&';
     parameters?.forEach((k, v) => postData += '$k=$v&');
     return Uri.encodeFull(postData);
@@ -69,7 +69,7 @@ class KrakenApi {
 
     // create hmac
     List<int> key = base64.decode(secretKey);
-    List<int> hmacInput = List();
+    List<int> hmacInput = [];
     hmacInput.addAll(utf8.encode(path));
     hmacInput.addAll(data.bytes);
     Hmac hmacSha512 = Hmac(sha512, key);
@@ -81,7 +81,7 @@ class KrakenApi {
   Future<String> _doRequest(
       String url, String apiKey, String apiSign, String postData) async {
     var response = await client.post(
-      url,
+      Uri.parse(url),
       encoding: Encoding.getByName('utf-8'),
       headers: {
         HttpHeaders.contentTypeHeader:

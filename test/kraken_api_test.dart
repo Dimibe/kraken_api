@@ -22,7 +22,7 @@ void main() {
 
   test('test api sign calculation', () async {
     Client client = MockClient((request) async {
-      return Response(request.headers['API-SIGN'], 200);
+      return Response(request.headers['API-SIGN']!, 200);
     });
     KrakenApi api = KrakenApi('', '');
     api.client = client;
