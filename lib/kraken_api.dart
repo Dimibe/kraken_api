@@ -1,7 +1,5 @@
 library kraken_api;
 
-import 'dart:io';
-
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -84,13 +82,12 @@ class KrakenApi {
       Uri.parse(url),
       encoding: Encoding.getByName('utf-8'),
       headers: {
-        HttpHeaders.contentTypeHeader:
-            'application/x-www-form-urlencoded;charset=utf-8',
-        HttpHeaders.userAgentHeader: 'dart_test',
-        HttpHeaders.connectionHeader: 'keep-alive',
-        HttpHeaders.cacheControlHeader: 'no-cache',
-        HttpHeaders.acceptHeader: '*/*',
-        HttpHeaders.acceptCharsetHeader: 'utf-8',
+        'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+        'user-agent': 'dart_test',
+        'connection': 'keep-alive',
+        'cache-control': 'no-cache',
+        'accept': '*/*',
+        'accept-charset': 'utf-8',
         'API-Key': apiKey,
         'API-Sign': apiSign,
       },
