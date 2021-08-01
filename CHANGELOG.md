@@ -1,3 +1,9 @@
+## [2.0.0] - 01.08.2021
+
+* Added null-safety
+* Remove usage of dart:io package to support js dart
+* Updated dependencies
+
 ## [2.0.0-nullsafety.1] - 31.03.2021
 
 * Remove usage of dart:io package to support js dart
