@@ -9,7 +9,7 @@ Dart Library for the Kraken API. (https://www.kraken.com/features/api).
  Add the package to your pubspec.yaml:
 
  ```yaml
- kraken_api: ^1.1.0
+ kraken_api: ^2.0.0-nullsafety.1
  ```
  
  In your dart file, import the library:

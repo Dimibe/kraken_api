@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:kraken_api/kraken_api.dart';
 
 void main() {
